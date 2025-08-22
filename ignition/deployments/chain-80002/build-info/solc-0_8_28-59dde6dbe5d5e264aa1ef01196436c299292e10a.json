@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-59dde6dbe5d5e264aa1ef01196436c299292e10a",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/profileRegistry.sol": "project/contracts/profileRegistry.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/profileRegistry.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract ProfileRegistry {\n\n    struct ProfileRecord {\n        string ipnsName;\n        uint256 lastUpdated;\n    }\n\n    mapping(address => ProfileRecord) public profiles;\n\n    function updateProfile(string calldata ipnsName, uint256 timestamp) external {\n        require(timestamp > profiles[msg.sender].lastUpdated, \"Stale update\");\n        profiles[msg.sender] = ProfileRecord(ipnsName, timestamp);\n    }\n}\n"
+      }
+    }
+  }
+}
